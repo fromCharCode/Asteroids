@@ -22,7 +22,7 @@ import com.jga.util.viewport.ViewportUtils;
 
 public class GameRenderer implements Disposable {
 
-    // == attributes ==s
+    // == attributes ==
     private final GameWorld gameWorld;
     private final SpriteBatch batch;
     private final AssetManager assetManager;
