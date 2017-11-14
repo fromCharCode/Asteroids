@@ -45,6 +45,8 @@ public class EntityFactory {
     public Asteroid createAsteroid(){
         Asteroid asteroid = new Asteroid();
         asteroid.setPosition((MathUtils.random(0, GameConfig.WORLD_WIDTH - asteroid.getWidth())), ((MathUtils.random(0, GameConfig.WORLD_HEIGHT - asteroid.getHeight()))));
+        // check distance to player
+
         return asteroid;
     }
 }
