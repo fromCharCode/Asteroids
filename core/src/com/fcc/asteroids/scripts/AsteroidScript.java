@@ -14,7 +14,7 @@ public class AsteroidScript extends EntityScriptBase<Asteroid> {
     @Override
     public void added(Asteroid entity) {
         super.added(entity);
-        entity.setVelocity(MathUtils.random(0, 360), 2.3f);
+        entity.setVelocity(MathUtils.random(0, 360), MathUtils.random(2f, 3f));
     }
 
     @Override

@@ -44,8 +44,32 @@ public class EntityFactory {
 
     public Asteroid createAsteroid(){
         Asteroid asteroid = new Asteroid();
-        asteroid.setPosition((MathUtils.random(0, GameConfig.WORLD_WIDTH - asteroid.getWidth())), ((MathUtils.random(0, GameConfig.WORLD_HEIGHT - asteroid.getHeight()))));
-        // check distance to player
+
+        boolean before = MathUtils.randomBoolean(0.5f);
+        boolean top = MathUtils.randomBoolean(0.5f);
+
+        float hGap = GameConfig.WORLD_CENTER_X - 2;
+        float vGap = GameConfig.WORLD_CENTER_Y - 2;
+
+        float startX;
+        float startY;
+
+        if (before){
+            startX = (MathUtils.random(0, hGap));
+            if(top){
+                startY = (MathUtils.random(GameConfig.WORLD_CENTER_X + vGap, GameConfig.WORLD_HEIGHT));
+            } else {
+                startY = (MathUtils.random(0, vGap));
+            }
+        } else {
+            startX = (MathUtils.random(GameConfig.WORLD_CENTER_X + hGap, GameConfig.WORLD_WIDTH));
+            if (top){
+                startY = (MathUtils.random(GameConfig.WORLD_CENTER_X + vGap, GameConfig.WORLD_HEIGHT));
+            } else {
+                startY = (MathUtils.random(0, vGap));
+            }
+        }
+        asteroid.setPosition(startX, startY);
 
         return asteroid;
     }

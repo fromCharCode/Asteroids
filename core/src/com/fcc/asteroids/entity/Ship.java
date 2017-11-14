@@ -1,5 +1,6 @@
 package com.fcc.asteroids.entity;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -29,15 +30,15 @@ public class Ship extends ShapeEntityBase {
         x = GameConfig.WORLD_CENTER_X;
         y = GameConfig.WORLD_CENTER_Y;
 
-        maxSpeed = 15;
-        acceleration = 3f;
-        deceleration = 1f;
+        maxSpeed = GameConfig.MAX_SPEED;
+        acceleration = GameConfig.ACCELERATION;
+        deceleration = GameConfig.DECELERATION;
+        rotationSpeed = GameConfig.ROTATION_SPEED;
 
         shapeX = new float[4];
         shapeY = new float[4];
 
         radians = 3.1415f/2f;
-        rotationSpeed = 2f;
     }
 
     public void setShape() {
@@ -57,27 +58,27 @@ public class Ship extends ShapeEntityBase {
         shapeY[3] = y + MathUtils.sin(radians + (GameConfig.SHIP_HEIGHT/2f) * 3.1415f / (GameConfig.SHIP_HEIGHT*0.625f)) * GameConfig.SHIP_WIDTH;
     }
 
-    public void update(float dt) {
+    public void update(float delta) {
 
         // turning
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            radians += rotationSpeed * dt;
+            radians += rotationSpeed * delta;
         }
         else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            radians -= rotationSpeed * dt;
+            radians -= rotationSpeed * delta;
         }
 
         // accelerating
         if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            dx += MathUtils.cos(radians) * acceleration * dt;
-            dy += MathUtils.sin(radians) * acceleration * dt;
+            dx += MathUtils.cos(radians) * acceleration * delta;
+            dy += MathUtils.sin(radians) * acceleration * delta;
         }
 
         // deceleration
         float vec = (float) Math.sqrt(dx * dx + dy * dy);
         if(vec > 0) {
-            dx -= (dx / vec) * deceleration * dt;
-            dy -= (dy / vec) * deceleration * dt;
+            dx -= (dx / vec) * deceleration * delta;
+            dy -= (dy / vec) * deceleration * delta;
         }
         if(vec > maxSpeed) {
             dx = (dx / vec) * maxSpeed;
@@ -85,8 +86,8 @@ public class Ship extends ShapeEntityBase {
         }
 
         // set position
-        x += dx * dt;
-        y += dy * dt;
+        x += dx * delta;
+        y += dy * delta;
 
         // set shape
         setShape();
@@ -128,5 +129,17 @@ public class Ship extends ShapeEntityBase {
 
     public void setUp(boolean up) {
         this.up = up;
+    }
+
+    public float getTopX(){
+        return shapeX[0];
+    }
+
+    public float getTopY(){
+        return shapeY[0];
+    }
+
+    public float getRadians(){
+        return radians;
     }
 }

@@ -25,13 +25,16 @@ public class GameConfig {
     public static final float SHIP_WIDTH = 0.405f;
     public static final float SHIP_HEIGHT = 0.81f;
 
-//    public static final float UNIT_SCALE = 1f / 64f; // for constructor of tiledMap
+    public static final float ACCELERATION = 3f;
+    public static final float DECELERATION = 1f;
+    public static final float ROTATION_SPEED = 2f;
+    public static final float MAX_SPEED = 15f;
 
-    public static final float MOVE_VELOCITY = 2.5f;
-//
-    public static final int LIVES_START = 3;
+    public static final float BULLET_SPEED = 30f;
+
+    public static final int LIVES_START = 150;
     public static final int HIT_SCORE = 50;
-//
+
 //    public static final float LIFE_WIDTH = 40f;
 //    public static final float LIFE_HEIGHT = 40f;
 //    public static final float LIFE_SPACING = 10f;

@@ -21,7 +21,6 @@ public class GameWorld {
     private final EntityFactory factory;
 
     private Ship ship;
-    private Asteroid asteroid; // change into array?
 
     private boolean drawGrid = true;
     private boolean drawDebug = true;
@@ -119,7 +118,8 @@ public class GameWorld {
     private void checkCollision(){
         for(Asteroid asteroid : asteroids){
             if (Intersector.overlapConvexPolygons(ship.getPolygon(), asteroid.getBounds())){
-                System.out.println("COLLIDING!!!!");
+                lives--;
+                System.out.println("Lives: " + lives);
             }
         }
     }
