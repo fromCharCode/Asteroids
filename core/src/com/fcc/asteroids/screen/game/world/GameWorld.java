@@ -1,9 +1,12 @@
 package com.fcc.asteroids.screen.game.world;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Intersector;
 import com.fcc.asteroids.common.EntityFactory;
 import com.fcc.asteroids.config.GameConfig;
 import com.fcc.asteroids.entity.Asteroid;
+import com.fcc.asteroids.entity.Bullet;
 import com.fcc.asteroids.entity.Ship;
 import com.fcc.asteroids.scripts.AsteroidScript;
 import com.jga.util.entity.script.EntityScript;
@@ -28,6 +31,7 @@ public class GameWorld {
     private boolean notActive;
 
     private List<Asteroid> asteroids;
+    private List<Bullet> bullets;
 
     private int lives = GameConfig.LIVES_START;
 
@@ -39,6 +43,8 @@ public class GameWorld {
     // == init ==
     private void init(){
         ship = factory.createShip();
+
+        bullets = new ArrayList<Bullet>();
 
         asteroids = new ArrayList<Asteroid>();
         for(int i=0; i<5; i++){
@@ -54,7 +60,17 @@ public class GameWorld {
         // update ship
         ship.update(delta);
 
-        // update single asteroid
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+            Bullet bullet = factory.createBullet(ship.getTopX(), ship.getTopY(), ship.getRadians());
+            bullets.add(bullet);
+        }
+
+        // update bullets
+        for (Bullet bullet : bullets){
+            bullet.update(delta);
+        }
+
+        // update asteroids
         for (Asteroid asteroid: asteroids) {
             asteroid.update(delta);
         }
@@ -87,6 +103,10 @@ public class GameWorld {
 
     public List<Asteroid> getAsteroids() {
         return asteroids;
+    }
+
+    public List<Bullet> getBullets() {
+        return bullets;
     }
 
     public boolean isGameOver(){

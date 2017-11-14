@@ -30,7 +30,7 @@ public class GameConfig {
     public static final float ROTATION_SPEED = 2f;
     public static final float MAX_SPEED = 15f;
 
-    public static final float BULLET_SPEED = 30f;
+    public static final float BULLET_SPEED = 300f;
 
     public static final int LIVES_START = 150;
     public static final int HIT_SCORE = 50;

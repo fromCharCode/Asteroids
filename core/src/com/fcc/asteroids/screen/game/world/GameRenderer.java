@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.fcc.asteroids.config.GameConfig;
 import com.fcc.asteroids.entity.Asteroid;
+import com.fcc.asteroids.entity.Bullet;
 import com.jga.util.GdxUtils;
 import com.jga.util.debug.DebugCameraController;
 import com.jga.util.debug.ShapeRendererUtils;
@@ -129,6 +130,12 @@ public class GameRenderer implements Disposable {
         List<Asteroid> asteroids = gameWorld.getAsteroids();
         for(Asteroid asteroid : asteroids){
             ShapeRendererUtils.entity(shapeRenderer, asteroid);
+        }
+
+        shapeRenderer.setColor(Color.CORAL);
+        List<Bullet> bullets = gameWorld.getBullets();
+        for(Bullet bullet : bullets){
+            bullet.draw(shapeRenderer);
         }
     }
 }
