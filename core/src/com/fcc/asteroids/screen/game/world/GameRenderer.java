@@ -6,14 +6,19 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.fcc.asteroids.config.GameConfig;
+import com.fcc.asteroids.entity.Asteroid;
 import com.jga.util.GdxUtils;
 import com.jga.util.debug.DebugCameraController;
 import com.jga.util.debug.ShapeRendererUtils;
 import com.jga.util.viewport.ViewportManager;
 import com.jga.util.viewport.ViewportUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Project name: Asteroids
@@ -118,9 +123,12 @@ public class GameRenderer implements Disposable {
 
     private void drawDebug(){
         shapeRenderer.setColor(Color.GREEN);
-        ShapeRendererUtils.entity(shapeRenderer, gameWorld.getShip());
+        gameWorld.getShip().draw(shapeRenderer);
 
         shapeRenderer.setColor(Color.RED);
-        ShapeRendererUtils.entity(shapeRenderer, gameWorld.getAsteroid());
+        List<Asteroid> asteroids = gameWorld.getAsteroids();
+        for(Asteroid asteroid : asteroids){
+            ShapeRendererUtils.entity(shapeRenderer, asteroid);
+        }
     }
 }

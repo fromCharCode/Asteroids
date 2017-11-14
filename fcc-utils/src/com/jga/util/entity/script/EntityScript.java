@@ -1,15 +1,16 @@
-package com.jga.util.script;
+package com.jga.util.entity.script;
 
 /**
- * @author goran on 29/11/2016.
+ * Created by dasch on 03.08.2017.
  */
 public interface EntityScript<T> {
 
     void added(T entity);
 
-    void removed(T entity);
+    void removed(T removed);
 
     void update(float delta);
 
     boolean isFinished();
+
 }

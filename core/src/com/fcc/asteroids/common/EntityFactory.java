@@ -2,6 +2,7 @@ package com.fcc.asteroids.common;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.fcc.asteroids.config.GameConfig;
 import com.fcc.asteroids.entity.Asteroid;
 import com.fcc.asteroids.entity.Ship;
@@ -35,8 +36,9 @@ public class EntityFactory {
 
     public Ship createShip(){
         Ship ship = new Ship();
-        ship.setSize(GameConfig.SHIP_WIDTH, GameConfig.SHIP_HEIGHT);
-        ship.setPosition((GameConfig.WORLD_CENTER_X - GameConfig.SHIP_WIDTH) + GameConfig.SHIP_WIDTH/4f, (GameConfig.WORLD_CENTER_Y - GameConfig.SHIP_HEIGHT) + GameConfig.SHIP_HEIGHT/4f);
+//        ship.setSize(GameConfig.SHIP_WIDTH, GameConfig.SHIP_HEIGHT);
+//        ship.setPosition((GameConfig.WORLD_CENTER_X - GameConfig.SHIP_WIDTH) + GameConfig.SHIP_WIDTH/4f, (GameConfig.WORLD_CENTER_Y - GameConfig.SHIP_HEIGHT) + GameConfig.SHIP_HEIGHT/4f);
+//        ship.setOrigin(ship.getX() + ship.getWidth()/2f, ship.getY() + ship.getHeight()/2f);
         return ship;
     }
 

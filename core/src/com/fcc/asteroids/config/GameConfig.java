@@ -22,8 +22,8 @@ public class GameConfig {
     public static final float WORLD_CENTER_X = WORLD_WIDTH / 2f;
     public static final float WORLD_CENTER_Y = WORLD_HEIGHT / 2f;
 
-    public static final float SHIP_WIDTH = 0.81f;
-    public static final float SHIP_HEIGHT = 1.62f;
+    public static final float SHIP_WIDTH = 0.405f;
+    public static final float SHIP_HEIGHT = 0.81f;
 
 //    public static final float UNIT_SCALE = 1f / 64f; // for constructor of tiledMap
 

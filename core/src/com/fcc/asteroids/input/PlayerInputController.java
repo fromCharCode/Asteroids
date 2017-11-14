@@ -2,6 +2,7 @@ package com.fcc.asteroids.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.fcc.asteroids.entity.Ship;
 import com.fcc.asteroids.screen.game.world.GameWorld;
 
 /**
@@ -12,10 +13,12 @@ public class PlayerInputController {
 
     // == attributes ==
     private final GameWorld gameWorld;
+    private Ship ship;
 
     // == constructor ==
     public PlayerInputController(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
+        ship = gameWorld.getShip();
     }
 
     // == public methods ==
@@ -25,9 +28,9 @@ public class PlayerInputController {
         // direction with rotation
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            // add velocity
+//            ship.
         } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            // reduce velocity, clamp to 0
+//            ship.setUp(false);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
@@ -35,9 +38,9 @@ public class PlayerInputController {
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            // change rotation to right // tan -? maybe helping circle around the ship
+//            ship.setRight(true);
         } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            // change rotation to left
+//            ship.setLeft(true);
         }
 
     }

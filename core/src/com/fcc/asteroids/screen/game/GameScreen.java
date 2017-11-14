@@ -2,6 +2,7 @@ package com.fcc.asteroids.screen.game;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.fcc.asteroids.common.EntityFactory;
+import com.fcc.asteroids.input.PlayerInputController;
 import com.fcc.asteroids.screen.game.world.GameController;
 import com.fcc.asteroids.screen.game.world.GameRenderer;
 import com.fcc.asteroids.screen.game.world.GameWorld;
@@ -22,6 +23,8 @@ public class GameScreen extends ScreenBaseAdapter {
     private GameController controller;
     private GameRenderer renderer;
 
+    private PlayerInputController playerInputController;
+
     private EntityFactory factory;
 //    input controller
 //    sound controller
@@ -38,7 +41,7 @@ public class GameScreen extends ScreenBaseAdapter {
         renderer = new GameRenderer(gameWorld, game.getBatch(), assetManager, game.getViewportManager()); // gameWorld, batch, assetManager
         controller = new GameController(gameWorld, renderer); // gameWorld, renderer
 
-//        paddle input controller
+        playerInputController = new PlayerInputController(gameWorld);
     }
 
     @Override
@@ -46,7 +49,7 @@ public class GameScreen extends ScreenBaseAdapter {
         boolean gameOver = gameWorld.isGameOver();
 
         if(!gameOver){
-//            input.update
+            playerInputController.update(delta);
         }
         controller.update(delta);
         renderer.render(delta);

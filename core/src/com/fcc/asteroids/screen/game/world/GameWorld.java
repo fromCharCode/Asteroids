@@ -1,11 +1,15 @@
 package com.fcc.asteroids.screen.game.world;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Intersector;
 import com.fcc.asteroids.common.EntityFactory;
 import com.fcc.asteroids.config.GameConfig;
 import com.fcc.asteroids.entity.Asteroid;
 import com.fcc.asteroids.entity.Ship;
+import com.fcc.asteroids.scripts.AsteroidScript;
+import com.jga.util.entity.script.EntityScript;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Project name: Asteroids
@@ -24,6 +28,8 @@ public class GameWorld {
     private boolean handleDebug = true;
     private boolean notActive;
 
+    private List<Asteroid> asteroids;
+
     private int lives = GameConfig.LIVES_START;
 
     public GameWorld(EntityFactory factory) {
@@ -35,8 +41,12 @@ public class GameWorld {
     private void init(){
         ship = factory.createShip();
 
-        asteroid = factory.createAsteroid();
-
+        asteroids = new ArrayList<Asteroid>();
+        for(int i=0; i<5; i++){
+            Asteroid asteroid = factory.createAsteroid();
+            asteroid.addScript(new AsteroidScript());
+            asteroids.add(asteroid);
+        }
     }
 
     // == public methods ==
@@ -46,7 +56,11 @@ public class GameWorld {
         ship.update(delta);
 
         // update single asteroid
-        asteroid.update(delta);
+        for (Asteroid asteroid: asteroids) {
+            asteroid.update(delta);
+        }
+
+        checkCollision();
     }
 
 
@@ -72,8 +86,8 @@ public class GameWorld {
         return ship;
     }
 
-    public Asteroid getAsteroid() {
-        return asteroid;
+    public List<Asteroid> getAsteroids() {
+        return asteroids;
     }
 
     public boolean isGameOver(){
@@ -98,5 +112,15 @@ public class GameWorld {
 
     public int getLives() {
         return lives;
+    }
+
+
+    // ==  private methods ==
+    private void checkCollision(){
+        for(Asteroid asteroid : asteroids){
+            if (Intersector.overlapConvexPolygons(ship.getPolygon(), asteroid.getBounds())){
+                System.out.println("COLLIDING!!!!");
+            }
+        }
     }
 }

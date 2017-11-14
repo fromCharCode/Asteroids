@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.MathUtils;
  * @author fromCharCode on 11/11/2017
  */
 public class ShapeUtils {
-
     /**
      * Creates array of vertices that represent octagon.
      *
@@ -67,7 +66,6 @@ public class ShapeUtils {
      * @return array of vertices
      */
     public static float[] createIrregularPolygon(float originX, float originY, float radius, int vertexCount){
-
         float[] ret; // = new float[vertexCount*2];
 
         ret = createPolygon(originX, originY, radius, vertexCount);
@@ -92,6 +90,7 @@ public class ShapeUtils {
         return ret;
     }
 
+    @Deprecated
     public static float[] createArrowTop(float x, float y, float width, float height){
         return new float[]{
                 x,y,

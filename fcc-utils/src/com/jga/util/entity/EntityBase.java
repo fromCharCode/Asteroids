@@ -1,124 +1,165 @@
 package com.jga.util.entity;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
-import com.jga.util.script.EntityScript;
+import com.badlogic.gdx.math.Vector2;
+import com.jga.util.entity.script.EntityScript;
+import com.jga.util.entity.script.ScriptController;
 import com.jga.util.shape.ShapeUtils;
-
-/**
- * Represents base class for entities / game objects.
- *
- * @author goran
- */
 
 public abstract class EntityBase {
 
-    // == attributes ==
-    protected float x;
-    protected float y;
+	// == attributes ==
+	protected float x;
+	protected float y;
+	
+	protected float width = 1;
+	protected float height = 1;
+	
+	protected Polygon bounds;
 
-    protected float width = 1;
-    protected float height = 1;
+    protected Vector2 velocity = new Vector2();
 
-    protected Polygon bounds = new Polygon();
+    protected ScriptController scriptController;
 
-    private final Array<EntityScript<EntityBase>> scripts = new Array<EntityScript<EntityBase>>();
+	// == constructors ==
+	public EntityBase() {
+        init();
+	}
 
-    // == constructors ==
-    public EntityBase() {
+    // == init ==
+    private void init(){
+        bounds = new Polygon();
         bounds.setPosition(x, y);
         bounds.setVertices(createVertices());
+        scriptController = new ScriptController(this);
+    }
+	
+	// == public methods ==
+    public void update(float delta){
+        scriptController.update(delta);
+
+        float newX = x + velocity.x * delta;
+        float newY = y + velocity.y * delta;
+
+        setPosition(newX, newY);
     }
 
-    // == public methods ==
-
-    /**
-     * Updates game object, called every frame.
-     *
-     * @param delta The delta time.
-     */
-    public void update(float delta) {
-        for (int i = 0; i < scripts.size; i++) {
-            EntityScript script = scripts.get(i);
-
-            if (script.isFinished()) {
-                scripts.removeIndex(i);
-            } else {
-                script.update(delta);
-            }
-        }
+    public Vector2 getVelocity() {
+        return velocity;
     }
 
-    public void setPosition(float x, float y) {
-        this.x = x;
-        this.y = y;
-        updateBounds();
+    public void setVelocityXY(float velocityX, float velocityY) {
+        velocity.set(velocityX, velocityY);
     }
 
-    public void setSize(float width, float height) {
+    public void setVelocity(float angleDeg, float value){
+        velocity.x = value * MathUtils.cosDeg(angleDeg);
+        velocity.y = value * MathUtils.sinDeg(angleDeg);
+    }
+
+    public void setVelocityX(float velocityX) {
+        velocity.x = velocityX;
+    }
+
+    public void setVelocityY(float velocityY){
+        velocity.y = velocityY;
+    }
+
+    public void multiplyVelocityX(float xAmount){
+        velocity.x *= xAmount;
+    }
+
+    public void multiplyVelocityY(float yAmount){
+        velocity.y *= yAmount;
+    }
+
+	public void setPosition(float x, float y){
+		this.x = x;
+		this.y = y;
+		updateBounds();
+	}
+	
+	public void setSize(float width, float height){
+		this.width = width;
+		this.height = height;
+		updateBounds();
+	}
+	
+	public float getX() {
+		return x;
+	}
+	
+	public void setX(float x) {
+		this.x = x;
+		updateBounds();
+	}
+	
+	public float getY() {
+		return y;
+	}
+	
+	public void setY(float y) {
+		this.y = y;
+		updateBounds();
+	}
+
+    public void setWidth(float width) {
         this.width = width;
-        this.height = height;
+        updateBounds();
+    }
+	
+	public float getWidth() {
+		return width;
+	}
+	
+	public float getHeight() {
+		return height;
+	}
+	
+	public Polygon getBounds() {
+		return bounds;
+	}
+
+
+    public float getSpeed(){
+        return velocity.len();
+    }
+
+    public void stop(){
+        velocity.setZero();
+    }
+
+    public boolean isNotActive(){
+        return velocity.isZero();
+    }
+
+    public void setSize(float size) {
+        this.width = size;
+        this.height = size;
         updateBounds();
     }
 
-    public void setSize(float wh) {
-        width = wh;
-        height = wh;
-        updateBounds();
+
+    public void updateBounds(){
+		bounds.setPosition(x, y);
+//		bounds.setVertices(createVertices());
+	}
+
+	public void addScript(EntityScript toAdd){
+        scriptController.addScript(toAdd);
     }
 
-    public float getX() {
-        return x;
+    public void removeScript(EntityScript toRemove){
+        scriptController.removeScript(toRemove);
     }
 
-    public float getY() {
-        return y;
+    public float getAngleDeg() {
+        return MathUtils.atan2(velocity.y, velocity.x) * MathUtils.radiansToDegrees;
     }
 
-    public void setX(float x) {
-        this.x = x;
-        updateBounds();
-    }
-
-    public void setY(float y) {
-        this.y = y;
-        updateBounds();
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
-    public Polygon getBounds() {
-        return bounds;
-    }
-
-    public Rectangle getBoundingRectangle() {
-        return bounds.getBoundingRectangle();
-    }
-
-    public void updateBounds() {
-        bounds.setPosition(x, y);
-        bounds.setVertices(createVertices());
-    }
-
-    public void addScript(EntityScript toAdd) {
-        scripts.add(toAdd);
-        toAdd.added(this);
-    }
-
-    public void removeScript(EntityScript toRemove) {
-        scripts.removeValue(toRemove, true);
-        toRemove.removed(this);
-    }
-
-    // == private methods ==
-    protected float[] createVertices() {
+    // == protected methods ==
+    protected float[] createVertices(){
         return ShapeUtils.createRectangle(width, height);
     }
 }
